@@ -16,9 +16,11 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+
+    <style></style>
   </head>
 
-  <body>
+  <body class="">
     <header class="sticky-top">
       <nav
         class="navbar bg-dark border-bottom border-danger border-3"
@@ -95,29 +97,14 @@
         ></div>
       </div>
     </main>
-    <footer class="container d-flex justify-content-center sticky-bottom">
+    <nav
+      aria-label="Page navigation"
+      class="container d-flex justify-content-center fixed-bottom"
+    >
+      <ul class="pagination" id="paginationContainer"></ul>
+    </nav>
+    <footer style="height: 200px">
       <!-- place footer here -->
-      <nav aria-label="Page navigation" class="">
-        <ul class="pagination">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">1</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">3</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
     </footer>
     <!-- Bootstrap JavaScript Libraries -->
     <script
@@ -131,6 +118,8 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
       let filter_box = document.getElementById("filter-box");
@@ -147,49 +136,86 @@
           filter_box.classList.remove("visually-hidden");
         }
       }
+      $(document).ready(function () {
+        let Container_CardDapil = $("#Container-card-dapil");
+        let paginationContainer = $("#paginationContainer");
+        let searchInput = $("#search-filter");
 
-      async function GetAPIListDapil() {
-        let URL_dapil_list = "https://caleg.zakiego.com/api/dpd/dapil/list";
+        async function GetAPIListDapil() {
+          let URL_dapil_list = "https://caleg.zakiego.com/api/dpd/dapil/list";
 
-        let Response_ListDapil = await fetch(URL_dapil_list);
-        let ListDapilRaw = await Response_ListDapil.json();
-        console.log(ListDapilRaw);
-        DisplayDapilCard(ListDapilRaw);
-      }
+          let Response_ListDapil = await fetch(URL_dapil_list);
+          let ListDapilRaw = await Response_ListDapil.json();
+          return ListDapilRaw.data;
+        }
 
-      let Container_CardDapil = document.getElementById("Container-card-dapil");
-      async function DisplayDapilCard(ListDapilRaw) {
-        let ListDapil = ListDapilRaw.data;
-        //console.log(ListDapil);
-        await ListDapil.sort((a, b) => {
-          const namaA = a.namaDapil.toUpperCase();
-          const namaB = b.namaDapil.toUpperCase();
-          if (namaA < namaB) {
-            return -1;
-          }
-          if (namaA > namaB) {
-            return 1;
-          }
-          return 0; // Kembalikan 0 jika kedua elemen sama
-        });
-        ListDapil.forEach((element) => {
-          Container_CardDapil.innerHTML += `
-          <div class="card col-1 mb-2" style="width: 20rem;">
-            <div class="card-body d-flex flex-column">
-              <h3 class="card-title">${element.namaDapil}</h3>
-              <p class="card-text">List DPD Dapil ${element.namaDapil}</p>
-              <div class="d-grid gap-2 mt-auto">
-              <a name="" id="" class="btn btn-primary" href="#" role="button"
-                >List</a
-              >
+        async function DisplayDapilCard(ListDapil) {
+          // Buat satu string untuk semua card
+          let cardHTML = "";
+          ListDapil.forEach((element) => {
+            cardHTML += `
+            <div class="card col-1 mb-2" style="width: 20rem;">
+                <div class="card-body d-flex flex-column">
+                    <h3 class="card-title">${element.namaDapil}</h3>
+                    <p class="card-text">List DPD Dapil ${element.namaDapil}</p>
+                    <div class="d-grid gap-2 mt-auto">
+                        <a href="#" class="btn btn-primary">List</a>
+                    </div>
+                </div>
             </div>
-            </div>
-          </div>
           `;
-        });
-      }
+          });
 
-      GetAPIListDapil();
+          // Setelah loop selesai, sisipkan semua card sekaligus ke dalam Container_CardDapil
+          Container_CardDapil.html(cardHTML);
+        }
+
+        // Menampilkan data pada halaman yang diminta
+        function displayPage(page, itemsPerPage, ListDapil) {
+          let startIndex = (page - 1) * itemsPerPage;
+          let endIndex = startIndex + itemsPerPage;
+          let paginatedDapil = ListDapil.slice(startIndex, endIndex);
+          DisplayDapilCard(paginatedDapil);
+        }
+
+        // Menginisialisasi paginasi
+        function initializePagination(itemsPerPage, ListDapil) {
+          let totalPages = Math.ceil(ListDapil.length / itemsPerPage);
+          let paginationHTML = "";
+          for (let i = 1; i <= totalPages; i++) {
+            paginationHTML += `<li class="page-item"><a class="page-link" id="a${i}" href="#">${i}</a></li>`;
+          }
+          paginationContainer.html(paginationHTML);
+
+          // Memperbarui tampilan halaman pertama saat halaman dimuat
+          displayPage(1, itemsPerPage, ListDapil);
+
+          // Menangani klik pada tombol paginasi
+          paginationContainer.on("click", "a.page-link", function (e) {
+            e.preventDefault();
+            let page = parseInt($(this).text());
+            displayPage(page, itemsPerPage, ListDapil);
+          });
+        }
+
+        // Memuat data dan inisialisasi paginasi saat halaman dimuat
+        GetAPIListDapil().then((ListDapil) => {
+          const itemsPerPage = 10; // Ubah jumlah item per halaman di sini
+          initializePagination(itemsPerPage, ListDapil);
+        });
+        searchInput.on("keyup", function () {
+          let searchText = $(this).val().toLowerCase();
+          let cards = Container_CardDapil.find(".card");
+          cards.each(function () {
+            let cardTitle = $(this).find(".card-title").text().toLowerCase();
+            if (cardTitle.indexOf(searchText) !== -1) {
+              $(this).show();
+            } else {
+              $(this).hide();
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>
