@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <header>
+      <nav
+        class="navbar bg-dark border-bottom border-danger border-3"
+        style="background-color: #791515 !important"
+      >
+        <div class="container">
+          <a href="/" class="navbar-brand"
+            ><img
+              src="https://pemilu2024.kpu.go.id/assets/logo.7cbefe7d.png"
+              alt="logo"
+              width="30"
+              height="30"
+              class="me-2"
+            /><strong class="d-inline-block d-lg-none text-white">KPU</strong
+            ><strong class="d-none d-lg-inline-block text-white"
+              >List Caleg Indonesia 2024</strong
+            ></a
+          ><button
+            class="btn border border-secondary d-flex align-items-center text-white"
+            id="button-filter"
+            onclick="filterButton_OnClick()"
+          >
+            <i
+              class="vue-feather vue-feather--filter me-2"
+              data-name="filter"
+              data-tags="funnel,hopper"
+              data-type="filter"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-filter vue-feather__content"
+              >
+                <polygon
+                  points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
+                ></polygon>
+              </svg>
+            </i>
+            <span id="btn-filter-text" class="visible">Sembunyikan Filter</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="container" style="background-color: ghostwhite">
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">Title</h3>
+                <p class="card-text">Text</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">Title</h3>
+                <p class="card-text">Text</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      let btn_filter = document.getElementById("button-filter");
+      let btn_filter_text = document.getElementById("btn-filter-text");
+
+      function filterButton_OnClick() {
+        if (btn_filter_text.classList.contains("visible")) {
+          btn_filter_text.classList.replace("visible", "hidden");
+          btn_filter_text.innerText = "Tampilkan Filter";
+        } else if (btn_filter_text.classList.contains("hidden")) {
+          btn_filter_text.classList.replace("hidden", "visible");
+          btn_filter_text.innerText = "Sembunyikan Filter";
+        }
+      }
+    </script>
+  </body>
+</html>
