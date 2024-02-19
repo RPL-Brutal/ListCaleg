@@ -16,6 +16,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -76,7 +77,12 @@
         style="background-color: ghostwhite"
       >
         <div class="row justify-content-center gap-lg-1">
-          <div class="card col-1 mb-2" style="width: 18rem">
+          <div
+            class="card col-1 mb-2"
+            style="width: 18rem"
+            data-aos="flip-left"
+            id="card"
+          >
             <img class="card-img-top" src="img/LOGO_DPD.svg" alt="Title" />
 
             <hr />
@@ -97,7 +103,11 @@
               </div>
             </div>
           </div>
-          <div class="card col-1 mb-2" style="width: 18rem">
+          <div
+            class="card col-1 mb-2"
+            style="width: 18rem"
+            data-aos="flip-left"
+          >
             <img class="card-img-top" src="img/LOGO_DPRRI.svg" alt="Title" />
             <hr />
             <div class="card-body">
@@ -113,7 +123,11 @@
               </div>
             </div>
           </div>
-          <div class="card col-1 mb-2" style="width: 18rem">
+          <div
+            class="card col-1 mb-2"
+            style="width: 18rem"
+            data-aos="flip-left"
+          >
             <img
               class="card-img-top"
               src="img/Lambang_DPRD_Generik.png"
@@ -133,7 +147,11 @@
               </div>
             </div>
           </div>
-          <div class="card col-1 mb-2" style="width: 18rem">
+          <div
+            class="card col-1 mb-2"
+            style="width: 18rem"
+            data-aos="flip-left"
+          >
             <img
               class="card-img-top"
               src="img/Lambang_DPRD_Generik.png"
@@ -159,6 +177,8 @@
     <footer>
       <!-- place footer here -->
     </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- Bootstrap JavaScript Libraries -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -172,19 +192,38 @@
       crossorigin="anonymous"
     ></script>
 
-    <script>
-      let btn_filter = document.getElementById("button-filter");
-      let btn_filter_text = document.getElementById("btn-filter-text");
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-      function filterButton_OnClick() {
-        if (btn_filter_text.classList.contains("visible")) {
-          btn_filter_text.classList.replace("visible", "hidden");
-          btn_filter_text.innerText = "Tampilkan Filter";
-        } else if (btn_filter_text.classList.contains("hidden")) {
-          btn_filter_text.classList.replace("hidden", "visible");
-          btn_filter_text.innerText = "Sembunyikan Filter";
+    <script>
+      AOS.init();
+      $(document).ready(function () {
+        let btn_filter = document.getElementById("button-filter");
+        let btn_filter_text = document.getElementById("btn-filter-text");
+        $(".card").each(function () {
+          let card = $(this);
+          card.mouseenter(function () {
+            card.clearQueue();
+            card.animate(
+              { bottom: ["10px", "swing"], width: ["20rem", "linear"] },
+              300
+            );
+          });
+          card.mouseleave(function () {
+            card.clearQueue();
+            card.animate({ bottom: "0px", width: "18rem" }, 300);
+          });
+        });
+
+        function filterButton_OnClick() {
+          if (btn_filter_text.classList.contains("visible")) {
+            btn_filter_text.classList.replace("visible", "hidden");
+            btn_filter_text.innerText = "Tampilkan Filter";
+          } else if (btn_filter_text.classList.contains("hidden")) {
+            btn_filter_text.classList.replace("hidden", "visible");
+            btn_filter_text.innerText = "Sembunyikan Filter";
+          }
         }
-      }
+      });
     </script>
   </body>
 </html>
