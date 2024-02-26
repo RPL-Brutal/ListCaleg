@@ -1,4 +1,4 @@
-# List Calon Legislatif Indonesia
+# List Calon Legislatif Indonesia euis
 Situs ini memberi Anda kesempatan untuk menemukan calon-calon potensial untuk kekuasaan legislatif Indonesia untuk pemilu 2024. Dari Aceh hingga Papua, Anda dapat menemukan semuanya di situs ini. Dengan navigasi yang mudah, Anda dapat mencari kandidat dari daerah yang Anda inginkan dan menjelajahi profil mereka untuk mempelajari lebih lanjut tentang latar belakang dan pengalaman mereka. Dapatkan informasi dan buatlah keputusan yang tepat dalam pemilu dengan bantuan situs web ini.
 
 ## Tujuan
